@@ -319,6 +319,6 @@ def baidu_dfr(self,soup):
             print("#dfr# :",str(e))
     return data
 if __name__ == "__main__":
-    r = Reptile(fr = dfr,dir=r".\newtxt")
+    r = Reptile(fr =baidu_dfr,dir=r".\newtxt")
     r.run(r"http://m.xqishu.com","m.xqishu.com",100000,downcount =5,loadcount =5)
     #r.run(r"http://m.xqishu.com/",100000)
