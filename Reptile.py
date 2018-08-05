@@ -45,8 +45,6 @@ class Reptile:
                             }
         else:
             self.headers = headers
-        
-        
         pass
     def craw(self,data):
         totle = 0
