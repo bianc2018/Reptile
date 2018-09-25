@@ -70,6 +70,7 @@ class Reptile:
             return 0
         return 1
         pass
+
     def download(self,url,rc = 5,data=None,proxies=None):
         try:
             rs = requests.request('GET', url, headers=self.headers,data=data)
