@@ -1,5 +1,5 @@
-#-* -coding:GBK -* -
-#ÖÐÎÄ×¢ÊÍÄ£°å
+#-* -coding:utf-8 -* -
+#ä¸­æ–‡æ³¨é‡Šæ¨¡æ¿
 import requests
 from requests import Timeout
 from http import cookiejar
@@ -61,7 +61,7 @@ class Reptile:
                             select = i
                             size = pro[1].qsize()
                     self.loadpro[select][1].put(d[2])
-                    print("×¼±¸»º´æ£ºurl:%s,½ø³Ì:%d"%(d[2],select))
+                    print("å‡†å¤‡ç¼“å­˜ï¼šurl:%s,è¿›ç¨‹:%d"%(d[2],select))
                     self.used_url.append(d[2])
                     self.linkc += 1
         for i in range(0,self.loadpronum):
@@ -77,101 +77,101 @@ class Reptile:
             content = rs.content
             soup = BeautifulSoup(content,'lxml')
             if soup.has_attr('href'):
-                if "¸ÃÒ³Î´ÕÒµ½" in soup.title.string :
+                if "è¯¥é¡µæœªæ‰¾åˆ°" in soup.title.string :
                     if rc>0:
-                        print("ÕÒ²»µ½ÍøÒ³£¬ÖØÐÂÏÂÔØÒ³Ãæ:",url,rc)
+                        print("æ‰¾ä¸åˆ°ç½‘é¡µï¼Œé‡æ–°ä¸‹è½½é¡µé¢:",url,rc)
                         soup = self.download(url, rc - 1)
                     else:
-                        print("ÏÂÔØÊ§°Ü£º´ÎÊýÓÃÍê")
+                        print("ä¸‹è½½å¤±è´¥ï¼šæ¬¡æ•°ç”¨å®Œ")
                         soup = None
         except Timeout as e:
             print('Downloader download ConnectionError or Timeout:' + str(e))
             soup = None
             if rc > 0:
-                print("³¬Ê±,ÖØÐÂÏÂÔØÒ³Ãæ:",url,rc)
+                print("è¶…æ—¶,é‡æ–°ä¸‹è½½é¡µé¢:",url,rc)
                 soup = self.download(url, rc - 1)
         except Exception as e:
             print('Downloader download Exception:' + str(e))
             soup = None
             if rc > 0:
-                print("´íÎó,ÖØÐÂÏÂÔØÒ³Ãæ:",url,rc)
+                print("é”™è¯¯,é‡æ–°ä¸‹è½½é¡µé¢:",url,rc)
                 soup = self.download(url, rc - 1)
         return soup
         pass
     def loadMp(self,loadfile,id,rc=5):
-        print("»º´æ½ø³ÌÆô¶¯,id:%d"%id)
+        print("ç¼“å­˜è¿›ç¨‹å¯åŠ¨,id:%d"%id)
         self.id = id
         while True:
             url = loadfile.get(True)
             if url == "kill":
-                print("½ø³Ì",id,"ÏÂÔØ½ø³Ì½áÊø")
+                print("è¿›ç¨‹",id,"ä¸‹è½½è¿›ç¨‹ç»“æŸ")
                 return 0
             try:
-                print("»º´æÒ³Ãæ:",url,"¶ÓÁÐ³¤¶È:",loadfile.qsize())
+                print("ç¼“å­˜é¡µé¢:",url,"é˜Ÿåˆ—é•¿åº¦:",loadfile.qsize())
                 s= time.time()
                 rs = requests.request('GET', url, headers=self.headers)
                 content = rs.content
                 soup = BeautifulSoup(content,'lxml')
                 if soup.has_attr('href'):
-                    if "¸ÃÒ³Î´ÕÒµ½" in soup.title.string :
+                    if "è¯¥é¡µæœªæ‰¾åˆ°" in soup.title.string :
                         if rc>0:
-                            print("ÕÒ²»µ½ÍøÒ³£¬ÖØÐÂÏÂÔØÒ³Ãæ:",url,rc)
+                            print("æ‰¾ä¸åˆ°ç½‘é¡µï¼Œé‡æ–°ä¸‹è½½é¡µé¢:",url,rc)
                             soup = self.download(url, rc - 1)
                         else:
-                            print("ÏÂÔØÊ§°Ü£º´ÎÊýÓÃÍê")
+                            print("ä¸‹è½½å¤±è´¥ï¼šæ¬¡æ•°ç”¨å®Œ")
                             soup = None
             except Timeout as e:
                 print('Downloader download ConnectionError or Timeout:' + str(e))
                 soup = None
                 if rc > 0:
-                    print("³¬Ê±,ÖØÐÂÏÂÔØÒ³Ãæ:",url,rc)
+                    print("è¶…æ—¶,é‡æ–°ä¸‹è½½é¡µé¢:",url,rc)
                     soup = self.download(url, rc - 1)
             except Exception as e:
                 print('Downloader download Exception:' + str(e))
                 soup = None
                 if rc > 0:
-                    print("´íÎó,ÖØÐÂÏÂÔØÒ³Ãæ:",url,rc)
+                    print("é”™è¯¯,é‡æ–°ä¸‹è½½é¡µé¢:",url,rc)
                     soup = self.download(url, rc - 1)
             if soup:
                 data = self.fr(self,soup)
                 if data:
                     self.datas.put(data)
                     e= time.time()
-                    print("»º´æÒ³Ãæ½áÊø:",url,"ºÄÊ±:%d S"%(e-s))
+                    print("ç¼“å­˜é¡µé¢ç»“æŸ:",url,"è€—æ—¶:%d S"%(e-s))
             pass
     def get(self,soup):
         data = self.fr(self,soup)
         return data
         pass
     def downloadMp(self,downfile,id):
-        print("ÏÂÔØ½ø³ÌÆô¶¯,id:%d"%id)
+        print("ä¸‹è½½è¿›ç¨‹å¯åŠ¨,id:%d"%id)
         self.id = id
         while True:
             down_file = downfile.get(True)
             if down_file[0] == "kill":
-                print("½ø³Ì",id,"ÏÂÔØ½ø³Ì½áÊø")
+                print("è¿›ç¨‹",id,"ä¸‹è½½è¿›ç¨‹ç»“æŸ")
                 return 0
             try:
-                print("½ø³Ì",id,"¿ªÊ¼ÏÂÔØÎÄ¼þ:",down_file[1],"url:",down_file[2])
+                print("è¿›ç¨‹",id,"å¼€å§‹ä¸‹è½½æ–‡ä»¶:",down_file[1],"url:",down_file[2])
                 s = time.time()
                 self.nowdown = down_file[1]
                 self.num = downfile.qsize()
                 url = quote(down_file[2],safe=string.printable)
                 if os.path.exists(down_file[1]):
-                    print('±¾µØÒÑ¾­´æÔÚ¸ÃÎÄ¼þ:',down_file[1])
+                    print('æœ¬åœ°å·²ç»å­˜åœ¨è¯¥æ–‡ä»¶:',down_file[1])
                     continue
                 urllib.request.urlretrieve(url,down_file[1],self.callbackfunc)
                 e = time.time()
-                print("½ø³Ì",id,"ÏÂÔØÎÄ¼þ½áÊø:",down_file[1],"url:",down_file[2],"ºÄÊ±:%d S"%(e-s))
+                print("è¿›ç¨‹",id,"ä¸‹è½½æ–‡ä»¶ç»“æŸ:",down_file[1],"url:",down_file[2],"è€—æ—¶:%d S"%(e-s))
             except Exception as e:
-                print("½ø³Ì",id,"#download# :",str(e))
+                print("è¿›ç¨‹",id,"#download# :",str(e))
         pass
     def callbackfunc(self,blocknum, blocksize, totalsize):
         percent = 100.0 * blocknum * blocksize / totalsize
         if percent > 100:
             percent = 100
-            print("ÏÂÔØ½ø³Ì£º%d,ÏÂÔØ%s£º%.2f%%,µÈ´ý¶ÓÁÐ:%d"% (self.id,self.nowdown,percent,self.num))
-    def saveMp(self,datas): #¶à½ø³ÌÏÂÔØ
+            print("ä¸‹è½½è¿›ç¨‹ï¼š%d,ä¸‹è½½%sï¼š%.2f%%,ç­‰å¾…é˜Ÿåˆ—:%d"% (self.id,self.nowdown,percent,self.num))
+    def saveMp(self,datas): #å¤šè¿›ç¨‹ä¸‹è½½
         #q.full() 
         for d in datas:
             if d[0] == 'down':
@@ -192,26 +192,26 @@ class Reptile:
         self.downpronum = downcount
         self.loadpronum = loadcount
         self.linkc = 0
-        #´´½¨downcount¸ö½ø³ÌÓÃÓÚÏÂÔØ
+        #åˆ›å»ºdowncountä¸ªè¿›ç¨‹ç”¨äºŽä¸‹è½½
         self.downpro = []
         for i in range(0,downcount):
             downfile = Queue()
             downprocess = Process(target=self.downloadMp, args=(downfile,i))
             downprocess.start()
             self.downpro.append([downprocess,downfile])
-        #´´½¨loadcount¸ö½ø³ÌÓÃÓÚ»º´æÍøÒ³
+        #åˆ›å»ºloadcountä¸ªè¿›ç¨‹ç”¨äºŽç¼“å­˜ç½‘é¡µ
         self.loadpro = []
         for i in range(0,loadcount):
             loadfile = Queue()
             loadprocess = Process(target=self.loadMp, args=(loadfile,i))
             loadprocess.start()
             self.loadpro.append([loadprocess,loadfile])
-        #Ö÷Ñ­»·
+        #ä¸»å¾ªçŽ¯
         self.loadpro[0][1].put(root)
         while self.linkc<=linkc:
             print(self.linkc,"find file:",self.num)
             data = self.datas.get(True)
-            print("»ñµÃÊý¾Ý´óÐ¡:%d,Ê£ÓàÊý¾Ý¶ÓÁÐ´óÐ¡:%d"%(len(data),self.datas.qsize()))
+            print("èŽ·å¾—æ•°æ®å¤§å°:%d,å‰©ä½™æ•°æ®é˜Ÿåˆ—å¤§å°:%d"%(len(data),self.datas.qsize()))
             self.saveMp(data)
             if self.craw(data) == 0 :
                 break
@@ -223,13 +223,14 @@ class Reptile:
             self.downpro[i][0].join()
         
         time_end=time.time()
-        print("ÅÀÈ¡½áÊø,ºÄÊ±:%d s"%(time_end-time_start))
-        print("ÅÀÈ¡URLÊýÄ¿:%d,ÏÂÔØÎÄ¼þÊýÄ¿:%d"%(len(self.used_url),self.num))
-        print("·ÖÀàÊý",len(used_url_index))
+        print("çˆ¬å–ç»“æŸ,è€—æ—¶:%d s"%(time_end-time_start))
+        print("çˆ¬å–URLæ•°ç›®:%d,ä¸‹è½½æ–‡ä»¶æ•°ç›®:%d"%(len(self.used_url),self.num))
+        print("åˆ†ç±»æ•°",len(used_url_index))
         for uui in used_url_index:
             print("main:",uui)
         pass
-    
+
+
 def qs_dfr(self,soup):
     txt = soup.find_all('a')
     data= []
@@ -239,14 +240,14 @@ def qs_dfr(self,soup):
         try:
             if tag.has_attr('href'):
                 href = tag['href']
-                if tag.string == "±¾µØÏÂÔØ(TXT¼æÈÝÐÔ×îºÃ)":
+                if tag.string == "æœ¬åœ°ä¸‹è½½(TXTå…¼å®¹æ€§æœ€å¥½)":
                     print("get .txt",href)
                     #print(soup.prettify())
-                    txtclass = soup.find_all('p',text=re.compile(r"·ÖÀà£º"))[0]
+                    txtclass = soup.find_all('p',text=re.compile(r"åˆ†ç±»ï¼š"))[0]
                     classpath = self.dir+ os.path.sep+txtclass.string
                     if os.path.exists(classpath) is False:
                         os.makedirs(classpath)
-                        print("´´½¨·ÖÀà",txtclass)
+                        print("åˆ›å»ºåˆ†ç±»",txtclass)
                     name = classpath+os.path.sep+href.split('/')[-1]
                     data.append(['down',name,href])
                     self.num+=1
@@ -281,14 +282,14 @@ def baidu_dfr(self,soup):
         try:
             if tag.has_attr('href'):
                 href = tag['href']
-                if tag.string == "±¾µØÏÂÔØ(TXT¼æÈÝÐÔ×îºÃ)":
+                if tag.string == "æœ¬åœ°ä¸‹è½½(TXTå…¼å®¹æ€§æœ€å¥½)":
                     print("get .txt",href)
                     #print(soup.prettify())
-                    txtclass = soup.find_all('p',text=re.compile(r"·ÖÀà£º"))[0]
+                    txtclass = soup.find_all('p',text=re.compile(r"åˆ†ç±»ï¼š"))[0]
                     classpath = self.dir+ os.path.sep+txtclass.string
                     if os.path.exists(classpath) is False:
                         os.makedirs(classpath)
-                        print("´´½¨·ÖÀà",txtclass)
+                        print("åˆ›å»ºåˆ†ç±»",txtclass)
                     name = classpath+os.path.sep+href.split('/')[-1]
                     data.append(['down',name,href])
                     self.num+=1
@@ -314,6 +315,7 @@ def baidu_dfr(self,soup):
         except Exception as e:
             print("#dfr# :",str(e))
     return data
+
 if __name__ == "__main__":
     r = Reptile(fr =baidu_dfr,dir=r".\newtxt")
     r.run(r"http://m.xqishu.com","m.xqishu.com",100000,downcount =5,loadcount =5)
